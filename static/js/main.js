@@ -14,12 +14,14 @@ $(document).ready(function () {
                 $('#imagePreview').fadeIn(650);
             }
             reader.readAsDataURL(input.files[0]);
+            reader.readAsDataURL(input.files[1]);
         }
     }
     $("#imageUpload").change(function () {
         $('.image-section').show();
         $('#btn-predict').show();
         $('#result').text('');
+        $('#result1').text('');
         $('#result').hide();
         readURL(this);
     });
@@ -27,6 +29,7 @@ $(document).ready(function () {
     // Predict
     $('#btn-predict').click(function () {
         var form_data = new FormData($('#upload-file')[0]);
+        var form_data1 = new FormData($('#upload-file')[1]);
 
         // Show loading animation
         $(this).hide();
@@ -37,6 +40,7 @@ $(document).ready(function () {
             type: 'POST',
             url: '/predict',
             data: form_data,
+            data1:form_data1,
             contentType: false,
             cache: false,
             processData: false,
@@ -46,6 +50,7 @@ $(document).ready(function () {
                 $('.loader').hide();
                 $('#result').fadeIn(600);
                 $('#result').text(' Result:  ' + data);
+                $('#result1').text(data1);
                 console.log('Success!');
             },
         });
